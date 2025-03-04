@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+<body>
+    
+    <header th:replace="~{home :: titulo}"></header>
+
+    <main>
+
+        <h1>Form Mechanic</h1>
+
+        <form th:action="@{/mechanic/save-mechanic}" th:object="${mechanic}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <h2 th:text="${mechanic.id == null ? 'New Mechanic' : 'Update Mechanic'}"></h2>
+
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" th:field="*{username}" required />
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" th:field="*{password}" required />
+            </div>
+            <div>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required />
+            </div>
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required />
+            </div>
+            <div>
+                <label for="birthdate">Birthdate:</label>
+                <input type="date" id="birthdate" name="birthdate" th:value="${mechanic.birthdate != null} ? ${#temporals.format(mechanic.birthdate, 'yyyy-MM-dd')} : ''" required />
+            </div>
+
+            <div>
+                <label for="salary">Salary:</label>
+                <input type="number" id="salary" name="salary" th:field="*{salary}" required />
+            </div>
+            <div>
+                <label for="specialization">Specialization:</label>
+                <input type="text" id="specialization" name="specialization" th:field="*{specialization}" required />
+            </div>
+            <div>
+                <label for="dateEntry">Date of Entry::</label>
+                <input type="date" id="dateEntry" name="dateEntry" th:value="${mechanic.dateEntry != null} ? ${#temporals.format(mechanic.dateEntry, 'yyyy-MM-dd')} : ''" required />
+            </div>
+
+            <div>
+                <button type="submit">Save Mechanic</button>
+            </div>
+
+        </form>
+
+        <a th:href="@{/mechanic}">Cancel</a>
+
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+
+<body>
+
+    <header th:replace="~{home :: cabecera}"></header>
+
+    <main>
+
+        <h1>Your account information!</h1>
+        <ul>
+            <li>Username: <span th:text="${#authentication.name}">username</span></li>
+            <li>Password: **encrypted</li>
+            <li>Full Name: <span th:text="${#authentication.principal.fullName}">fullName</span></li>
+            <li>Type User: 
+                <span th:if="${#authentication.principal.customer}">Customer</span>
+                <span th:if="${#authentication.principal.mechanic}">Mechanic</span>
+            </li>
+            <li>Roles: 
+                <ul>
+                    <li 
+                        th:each="authority : ${#authentication.authorities}"
+                        th:text="${authority.authority}">rol</li>
+                </ul>
+            </li>
+
+        </ul>
+
+        <div th:if="${#authentication.principal.customer}">
+            <h2>Customer Information</h2>
+            <ul>
+                <li>Phone: <span th:text="${#authentication.principal.customer.phone}">phone</span></li>
+                <li>Address: <span th:text="${#authentication.principal.customer.address}">address</span></li>
+            </ul>
+        </div>
+
+        <div th:if="${#authentication.principal.mechanic}">
+            <h2>Mechanic Information</h2>
+            <ul>
+                <li>Salary: <span th:text="${#authentication.principal.mechanic.salary}">salary</span></li>
+                <li>Specialization: <span th:text="${#authentication.principal.mechanic.specialization}">specialization</span></li>
+                <li>Date Entry: <span th:text="${#authentication.principal.mechanic.dateEntry}">dateEntry</span></li>
+            </ul>
+        </div>
+
+        <div>
+            <p>Do you want to edit your information? <a th:href="@{/home/view-general-form}">Do it here</a></p>
+        </div>
+        
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+
+</html>

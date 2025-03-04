@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+<body>
+    
+    <header th:replace="~{home :: cabecera}"></header>
+
+    <main>
+
+        <div>
+            <h1>Car Management!</h1>
+            <a th:href="@{/customer/car/view-form-car}">Add Car</a>
+        </div>
+
+        <div>
+            <form th:action="@{/customer/car/search}" method="get">
+                <input 
+                    type="text"
+                    name="patent"
+                    placeholder="Search by patent..."
+                    th:value="${param.patent}">
+                <button type="submit">Search</button>
+                <a th:href="@{/customer/car}">Clear</a>
+            </form>
+        </div>
+
+        <div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>CUSTOMER</th>
+                        <th>PATENT</th>
+                        <th>BRAND</th>
+                        <th>MODEL</th>
+                        <th>YEAR</th>
+                        <th>COLOR</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="car : ${cars}">
+                        <td th:text="${car.firstName}"></td>
+                        <td th:text="${car.patent}"></td>
+                        <td th:text="${car.brand}"></td>
+                        <td th:text="${car.model}"></td>
+                        <td th:text="${car.year}"></td>
+                        <td th:text="${car.color}"></td>
+                        <td>
+                            <a th:href="@{/customer/car/edit/{patent}(patent=${car.patent})}">Edit</a>
+                            <a 
+                                th:href="@{/customer/car/delete/{patent}(patent=${car.patent})}"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+</html>

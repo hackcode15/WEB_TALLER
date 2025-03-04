@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+<body>
+    
+    <header th:replace="~{home :: cabecera}"></header>
+
+    <main>
+
+        <div>
+
+            <h1>Mechanic Management!</h1>
+            <a th:href="@{/mechanic/view-form-mechanic}">New Mechanic</a>
+
+        </div>
+
+        <div>
+
+            <form th:action="@{/mechanic/search}" method="get">
+                <input 
+                    type="text"
+                    name="id"
+                    placeholder="Search by ID..."
+                    th:value="${param.id}">
+
+                <button type="submit">Search</button>
+                <a th:href="@{/mechanic}">Clear</a>
+
+            </form>
+
+        </div>
+
+        <div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>FIRSTNAME</th>
+                        <th>LASTNAME</th>
+                        <th>BIRTHDATE</th>
+                        <th>AGE</th>
+                        <th>SALARY</th>
+                        <th>SPECIALIZATION</th>
+                        <th>DATE_OF_ENTRY</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="mechanic : ${mechanics}">
+                        <td th:text="${mechanic.id}"></td>
+                        <td th:text="${mechanic.firstName}"></td>
+                        <td th:text="${mechanic.lastName}"></td>
+                        <td th:text="${mechanic.birthdate}"></td>
+                        <td th:text="${mechanic.age}"></td>
+                        <td th:text="${mechanic.salary}"></td>
+                        <td th:text="${mechanic.specialization}"></td>
+                        <td th:text="${mechanic.dateEntry}"></td>
+                        <td>
+                            <a th:href="@{/mechanic/edit/{id}(id=${mechanic.id})}">Edit</a>
+                            <a 
+                                th:href="@{/mechanic/delete/{id}(id=${mechanic.id})}"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+<body>
+    
+    <header th:replace="~{home :: cabecera}"></header>
+
+    <main>
+
+        <h1>Form Car</h1>
+
+        <form th:action="@{/customer/car/save-car}" th:object="${car}" method="post">
+        
+            <input type="hidden" th:value="*{patent}">
+
+            <h2 th:text="${car.patent == null ? 'New Car' : 'Update Car'}"></h2>
+
+            <div>
+                <label for="customer">Customer</label>
+                <select name="customer" id="customer" th:field="*{customer}">
+                    <option value="">Select Customer</option>
+                    <option 
+                        th:each="customer : ${customers}" 
+                        th:value="${customer.id}" 
+                        th:text="${customer.firstName}"
+                        th:selected="${car.customer != null && car.customer.id == customer.id}">
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label for="patent">Patent:</label>
+                <input type="text" id="patent" name="patent" th:field="*{patent}" required />
+            </div>
+            <div>
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" th:field="*{brand}" required />
+            </div>
+            <div>
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="model" th:field="*{model}" required />
+            </div>
+            <div>
+                <label for="year">Year:</label>
+                <input type="number" id="year" name="year" th:field="*{year}" required />
+            </div>
+            <div>
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" th:field="*{color}" required />
+            </div>
+
+            <div>
+                <button type="submit">Save</button>
+            </div>
+
+        </form>
+
+        <a th:href="@{/customer/car}">Cancel</a>
+
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+</html>

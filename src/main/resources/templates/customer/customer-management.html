@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+<body>
+    
+    <header th:replace="~{home :: cabecera}"></header>
+
+    <main>
+
+        <div>
+            <h1>Customer Management!</h1>
+            <a th:href="@{/customer/view-form-customer}">New Customer</a><br/>
+            <a th:href="@{/customer/car}">Car Management!</a>
+        </div>
+
+        <div>
+
+            <form th:action="@{/customer/search}" method="get">
+
+                <input 
+                    type="number"
+                    name="id"
+                    placeholder="Search by ID..."
+                    th:value="${param.id}">
+                
+                <button type="submit">Search</button>
+                <a th:href="@{/customer}">Clear</a>
+
+            </form>
+
+        </div>
+
+        <div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>FIRSTNAME</th>
+                        <th>LASTNAME</th>
+                        <th>BIRTHDATE</th>
+                        <th>AGE</th>
+                        <th>PHONE</th>
+                        <th>ADDRESS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="customer : ${customers}">
+                        <td th:text="${customer.id}"></td>
+                        <td th:text="${customer.firstName}"></td>
+                        <td th:text="${customer.lastName}"></td>
+                        <td th:text="${customer.birthdate}"></td>
+                        <td th:text="${customer.age}"></td>
+                        <td th:text="${customer.phone}"></td>
+                        <td th:text="${customer.address}"></td>
+                        <td>
+                            <a th:href="@{/customer/edit/{id}(id=${customer.id})}">Edit</a>
+                            <a 
+                                th:href="@{/customer/delete/{id}(id=${customer.id})}"
+                                onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+</html>

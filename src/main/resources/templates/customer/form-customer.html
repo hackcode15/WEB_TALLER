@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+
+<body>
+
+    <header th:replace="~{home :: cabecera}"></header>
+
+    <main>
+
+        <h1>Form Customer</h1>
+
+        <form th:action="@{/customer/save-customer}" th:object="${customer}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <h2 th:text="${customer.id == null ? 'New Customer' : 'Update Customer'}"></h2>
+
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" th:field="*{username}" required />
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" th:field="*{password}" required />
+            </div>
+            <div>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required />
+            </div>
+            <div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required />
+            </div>
+            <!-- <div>
+                <label for="birthdate">Birthdate:</label>
+                <input type="date" id="birthdate" name="birthdate" th:field="*{birthdate}" required />
+            </div> -->
+            <div>
+                <label for="birthdate">Birthdate:</label>
+                <input type="date" id="birthdate" name="birthdate" th:value="${customer.birthdate != null} ? ${#temporals.format(customer.birthdate, 'yyyy-MM-dd')} : ''" required />
+            </div>
+
+            <div>
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" th:field="*{phone}" />
+            </div>
+            <div>
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" th:field="*{address}" />
+            </div>
+
+            <div>
+                <button type="submit">Save Customer</button>
+            </div>
+
+        </form>
+
+        <a th:href="@{/customer}">Cancel</a>
+
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+
+</html>

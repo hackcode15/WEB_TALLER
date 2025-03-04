@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:fragment="titulo">Taller MK</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+
+<body>
+
+    <header th:fragment="cabecera">   
+        <nav>
+
+            <a th:href="@{/home}">CAR REPAIR MK</a>
+
+            <ul>
+                <li><a th:href="@{/home}">Home</a></li>
+                <li sec:authorize="hasRole('DEVELOPER')"><a th:href="@{/mechanic}">M-Mechanic</a></li>
+                <li sec:authorize="hasRole('DEVELOPER')"><a th:href="@{/customer}">M-Customer</a></li>
+                <li sec:authorize="hasRole('DEVELOPER')"><a th:href="@{#}">M-Workshop Service</a></li>
+                <li sec:authorize="hasRole('DEVELOPER')"><a th:href="@{#}">M-Solicitude</a></li>
+                <li><a th:href="@{/home/profile}">profile</a></li>
+            </ul>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <h1>Welcome, <span th:text="${#authentication.principal.fullName}">User</span>!</h1>
+
+        <p style="font-weight: bold; color: blue;">You are successfully logged in.</p>
+
+        <!-- tabla de autos -->
+
+        <div th:if="${#authentication.principal.customer}">
+
+            <div>
+                <p>Your registred vehicles</p>
+                <a th:href="@{/home/view-form-mycar}">Add new car</a>
+            </div>
+            
+
+            <div>
+
+                <form th:action="@{/home/search-mycar}" method="get">
+
+                    <input 
+                        type="text"
+                        name="patent"
+                        placeholder="Search by patent..."
+                        th:value="${param.patent}">
+                
+                    <button type="submit">Search</button>
+                    <a th:href="@{/home}">Clear</a>
+
+                </form>
+                
+            </div>
+
+            <div>
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>PATENT</th>
+                            <th>BRAND</th>
+                            <th>MODEL</th>
+                            <th>YEAR</th>
+                            <th>COLOR</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr th:each="car : ${mycars}">
+                            <td th:text="${car.patent}"></td>
+                            <td th:text="${car.brand}"></td>
+                            <td th:text="${car.model}"></td>
+                            <td th:text="${car.year}"></td>
+                            <td th:text="${car.color}"></td>
+                            <td>
+                                <a th:href="@{/home/edit-mycar/{patent}(patent=${car.patent})}">Edit</a>
+                                <a 
+                                    th:href="@{/home/delete-mycar/{patent}(patent=${car.patent})}"
+                                    onclick="return confirm('Are you sure?')">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+    
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- tabla de autos -->
+
+        <br/>
+        <br/>
+
+        <div>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Log Out</button>
+            </form>
+        </div>
+
+    </main>
+
+    <footer th:fragment="pie-de-pagina">
+        <p>&copy; 2025 Web Car Repair MK by Diego Gomez</p>
+    </footer>
+
+</body>
+
+</html>
