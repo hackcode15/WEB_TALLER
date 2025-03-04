@@ -1,3 +1,13 @@
+/*
+!/src/
+
+# Ignorar archivos específicos en la raíz
+/.gitattributes
+/.gitignore
+/mvnw
+/mvnw.cmd
+/pom.xml
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
