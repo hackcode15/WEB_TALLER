@@ -4,65 +4,269 @@
 <head>
     <meta charset="UTF-8">
     <title th:fragment="titulo">Taller MK</title>
-    <link rel="stylesheet" th:href="@{/styles.css}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/header-styles.css}">
+    <link rel="stylesheet" th:href="@{/css/footer-styles.css}">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .table-container {
+            max-height: 272px; /* Altura máxima del contenedor de la tabla */
+            overflow-y: auto; /* Scroll vertical */
+            margin-top: 20px;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background-color: #007bff; /* Color de fondo de la cabecera */
+            z-index: 1; /* Asegura que la cabecera esté por encima del cuerpo */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-right: 5px;
+        }
+
+        .btn-edit {
+            background-color: #28a745; /* Verde para el botón de editar */
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #218838;
+        }
+
+        .btn-delete {
+            background-color: #dc3545; /* Rojo para el botón de eliminar */
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+        /* Estilos para el contenedor del formulario de búsqueda */
+        #div-form-search {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Estilos para el formulario */
+        #div-form-search form {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Espacio entre los elementos */
+        }
+
+        /* Estilos para el campo de búsqueda */
+        #div-form-search input[type="text"] {
+            flex: 1; /* Ocupa el espacio disponible */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Estilos para los botones */
+        #div-form-search button,
+        #div-form-search a {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Estilos específicos para el botón de búsqueda */
+        #btn-confirm-search {
+            background-color: #007bff;
+        }
+
+        #btn-confirm-search:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para el botón de limpiar */
+        #div-form-search a {
+            background-color: #6c757d;
+        }
+
+        #div-form-search a:hover {
+            background-color: #5a6268;
+        }
+
+        /* Estilos para el botón de cancelar */
+        #btn-hidden-form-search {
+            background-color: #dc3545;
+        }
+
+        #btn-hidden-form-search:hover {
+            background-color: #c82333;
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <header th:fragment="cabecera">   
+    <header th:fragment="cabecera" class="header">
+        <div class="logo">
+            <img src="/images/logo2.png" alt="logo">
+        </div>
         <nav>
-
-            <a th:href="@{/home}">CAR REPAIR MK</a>
-
-            <ul>
+            <ul class="nav-links">
                 <li><a th:href="@{/home}">Home</a></li>
                 <li sec:authorize="hasRole('DEVELOPER')"><a th:href="@{/mechanic}">M-Mechanic</a></li>
                 <li sec:authorize="hasRole('DEVELOPER')"><a th:href="@{/customer}">M-Customer</a></li>
-                <li sec:authorize="hasRole('DEVELOPER')"><a th:href="@{#}">M-Workshop Service</a></li>
-                <li sec:authorize="hasRole('DEVELOPER')"><a th:href="@{#}">M-Solicitude</a></li>
-                <li><a th:href="@{/home/profile}">profile</a></li>
+                <li sec:authorize="hasAnyRole('DEVELOPER', 'ADMIN')">
+                    <a th:href="@{/service-workshop}">M-Workshop Service</a>
+                </li>
+                <li sec:authorize="hasAnyRole('DEVELOPER', 'ADMIN')" th:if="${#authentication.principal.mechanic}">
+                    <a th:href="@{#}">M-Solicitude</a>
+                </li>
+                <li sec:authorize="hasRole('USER')" th:if="${#authentication.principal.customer}">
+                    <a th:href="@{#}">Service Workshop</a>
+                </li>
+                <li sec:authorize="hasRole('USER')" th:if="${#authentication.principal.customer}">
+                    <a th:href="@{#}">Solicitude</a>
+                </li>
+                <li><a th:href="@{/home/profile}">Profile</a></li>
             </ul>
-
         </nav>
+        <a th:href="@{#}" class="btn-contacto"><button>Contact</button></a>
     </header>
 
     <main>
-
         <h1>Welcome, <span th:text="${#authentication.principal.fullName}">User</span>!</h1>
 
-        <p style="font-weight: bold; color: blue;">You are successfully logged in.</p>
-
         <!-- tabla de autos -->
-
         <div th:if="${#authentication.principal.customer}">
-
-            <div>
-                <p>Your registred vehicles</p>
-                <a th:href="@{/home/view-form-mycar}">Add new car</a>
-            </div>
-            
-
-            <div>
-
-                <form th:action="@{/home/search-mycar}" method="get">
-
-                    <input 
-                        type="text"
-                        name="patent"
-                        placeholder="Search by patent..."
-                        th:value="${param.patent}">
-                
-                    <button type="submit">Search</button>
-                    <a th:href="@{/home}">Clear</a>
-
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <a th:href="@{/home/view-form-mycar}" class="btn btn-primary">Add new car</a>
+                    <button type="button" id="btn-view-form-search" class="btn btn-primary">Search My Car</button>
+                </div>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-warning">Log Out</button>
                 </form>
-                
             </div>
 
-            <div>
+            <div id="div-form-search" hidden>
+                <form th:action="@{/home/search-mycar}" method="get" role="search">
+                    <input 
+                        type="text" 
+                        id="patent-car" 
+                        name="patent" 
+                        placeholder="Search by patent..." 
+                        th:value="${param.patent}">
+                    <button id="btn-confirm-search" type="submit">Search</button>
+                    <a th:href="@{/home}">Clear</a>
+                    <button type="button" id="btn-hidden-form-search">Cancel</button>
+                </form>
+            </div>
 
+            <div class="table-container">
                 <table>
-
                     <thead>
                         <tr>
                             <th>PATENT</th>
@@ -73,7 +277,6 @@
                             <th>ACTIONS</th>
                         </tr>
                     </thead>
-    
                     <tbody>
                         <tr th:each="car : ${mycars}">
                             <td th:text="${car.patent}"></td>
@@ -82,37 +285,42 @@
                             <td th:text="${car.year}"></td>
                             <td th:text="${car.color}"></td>
                             <td>
-                                <a th:href="@{/home/edit-mycar/{patent}(patent=${car.patent})}">Edit</a>
-                                <a 
-                                    th:href="@{/home/delete-mycar/{patent}(patent=${car.patent})}"
-                                    onclick="return confirm('Are you sure?')">Delete</a>
+                                <a th:href="@{/home/edit-mycar/{patent}(patent=${car.patent})}" class="btn-edit">Edit</a>
+                                <a th:href="@{/home/delete-mycar/{patent}(patent=${car.patent})}" class="btn-delete" onclick="return confirm('Are you sure?')">Delete</a>
                             </td>
                         </tr>
                     </tbody>
-    
                 </table>
-
             </div>
-
         </div>
-
-        <!-- tabla de autos -->
-
-        <br/>
-        <br/>
-
-        <div>
-            <form th:action="@{/logout}" method="post">
-                <button type="submit">Log Out</button>
-            </form>
-        </div>
-
     </main>
 
     <footer th:fragment="pie-de-pagina">
-        <p>&copy; 2025 Web Car Repair MK by Diego Gomez</p>
+        <div>
+            <p>© 2025 Mi Sitio Web. Todos los derechos reservados.</p>
+            <p>
+                Síguenos en 
+                <a th:href="@{#}" class="text-white">Facebook</a>
+                y 
+                <a th:href="@{#}" class="text-white">Twitter</a>
+            </p>
+        </div>
     </footer>
 
-</body>
+    <script>
+        const btnViewFormSearch = document.getElementById("btn-view-form-search");
+        const divFormSearch = document.getElementById("div-form-search");
+        const btnHiddenFormSearch = document.getElementById("btn-hidden-form-search");
+        const btnConfirmSearch = document.getElementById("btn-confirm-search");
 
+        btnViewFormSearch.addEventListener("click", function () {
+            divFormSearch.hidden = false;
+        });
+
+        btnHiddenFormSearch.addEventListener("click", function () {
+            document.getElementById("patent-car").value = "";
+            divFormSearch.hidden = true;
+        });
+    </script>
+</body>
 </html>

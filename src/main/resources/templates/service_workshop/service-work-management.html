@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+<body>
+
+    <header th:replace="~{home :: cabecera}"></header>
+    
+    <main>
+
+        <div>
+            <h1>Service Workshop Management</h1>
+            <a th:href="@{/service-workshop/view-form-service_workshop}">New Service Workshop</a>
+        </div>
+
+        <div>
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>STATUS</th>
+                        <th>PRICE</th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <tr th:each="service : ${services}">
+                        <td th:text="${service.id}"></td>
+                        <td th:text="${service.name}"></td>
+                        <td th:text="${service.status}"></td>
+                        <td th:text="${service.price}"></td>
+                    </tr>
+                </tbody>
+    
+            </table>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+</html>

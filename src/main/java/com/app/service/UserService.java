@@ -93,7 +93,7 @@ public class UserService implements IUserService {
 
         if (user.getId() != null) {
             
-            if (user instanceof  Customer) {
+            if (user instanceof Customer) {
                 
                 Customer customer = customerRepo.findById(user.getId())
                     .orElseThrow(() -> new RuntimeException("Error cliente no encontrado con ID: " + user.getId()));
@@ -161,7 +161,5 @@ public class UserService implements IUserService {
     public void updateUser(User user) {
        repo.save(user);
     }
-
-    
 
 }

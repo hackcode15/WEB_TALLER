@@ -37,10 +37,6 @@
                 <label for="lastName">Last Name:</label>
                 <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required />
             </div>
-            <!-- <div>
-                <label for="birthdate">Birthdate:</label>
-                <input type="date" id="birthdate" name="birthdate" th:field="*{birthdate}" required />
-            </div> -->
             <div>
                 <label for="birthdate">Birthdate:</label>
                 <input type="date" id="birthdate" name="birthdate" th:value="${customer.birthdate != null} ? ${#temporals.format(customer.birthdate, 'yyyy-MM-dd')} : ''" required />

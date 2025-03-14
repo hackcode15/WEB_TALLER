@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{home :: titulo}"></title>
+</head>
+<body>
+
+    <header th:replace="~{home :: cabecera}"></header>
+    
+    <main>
+
+        <!-- <table>
+
+            <thead>
+                <tr>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+
+        </table> -->
+
+        <h1>Form Service Workshop</h1>
+        
+        <form th:action="@{/service-workshop/save-service_workshop}" th:object="${service}" method="post">
+
+            <input type="hidden" th:value="*{id}">
+
+            <h2 th:text="${service.id == null ? 'New Service' : 'Update Service'}"></h2>
+
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}" required/>
+            </div>
+            <div>
+                <label for="status">Status:</label>
+                <select id="status" th:field="*{status}">
+                    <option value="">Select status service</option>
+                    <option th:value="true" th:text="ACTIVE"></option>
+                    <option th:value="false" th:text="INACTIVE"></option>
+                </select>
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" id="price" th:field="*{price}" required/>
+            </div>
+
+            <div>
+                <button type="submit">Save</button>
+                <a th:href="@{/service-workshop}">Cancel</a>
+            </div>
+
+        </form>
+
+    </main>
+
+    <footer th:replace="~{home :: pie-de-pagina}"></footer>
+
+</body>
+</html>

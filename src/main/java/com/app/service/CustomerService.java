@@ -96,9 +96,6 @@ public class CustomerService implements ICustomerService {
     @Override
     public CustomerDTO findCustomerDtoById(Integer id) {
 
-        /* Customer customer = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente con ID: " + id + " no existe")); */
-        
         Customer customer = this.findCustomerById(id);
 
         CustomerDTO customerDTO = CustomerDTO.builder()
@@ -120,9 +117,6 @@ public class CustomerService implements ICustomerService {
     @Override
     public void deleteCustomerById(Integer id) {
 
-        /* Customer customer = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente con ID: " + id + " no existe")); */
-        
         Customer customer = this.findCustomerById(id);
 
         repo.deleteById(customer.getId());
@@ -144,12 +138,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public List<CarDTO> findAllMyCarDTOs(Integer idCustomer) {
 
-        /* Customer customer = repo.findById(idCustomer)
-                .orElseThrow(() -> new RuntimeException("Error cliente no encontrado con ID: " + idCustomer)); */
-
         Customer customer = this.findCustomerById(idCustomer);
 
-        return repo.findAllCarsByCustomerId(customer.getId());   
+        return repo.findAllCarsByCustomerId(customer.getId());
+
     }
 
     @Override
@@ -165,6 +157,10 @@ public class CustomerService implements ICustomerService {
 
     }
 
+    /*
+     * Error encontrado, cuando se intenta agregar un auto que ya existe de otro cliente, y entro en otra cuanta, cuando pongo la patente
+     * de ese vehiculo existente del otro cliente, se sobreescribe, osea lo saca del otro cliente y lo pone al nuevo
+     */
     @Override
     public void saveMyNewCar(CarDTO carDTO, Integer idCustomer) {
         

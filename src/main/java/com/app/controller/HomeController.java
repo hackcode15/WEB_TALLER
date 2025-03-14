@@ -39,30 +39,6 @@ public class HomeController {
     @Autowired
     private CarService carService;
 
-    /*
-     * private Integer getIdUserAuthenticado(Authentication authentication) {
-     * 
-     * if (authentication != null) {
-     * 
-     * UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-     * 
-     * if (userDetails instanceof UserPrincipal) {
-     * 
-     * UserPrincipal userPrincipal = (UserPrincipal) userDetails;
-     * 
-     * if (userPrincipal.isCustomer()) {
-     * return userPrincipal.getId();
-     * }
-     * 
-     * }
-     * 
-     * }
-     * 
-     * return null;
-     * 
-     * }
-     */
-
     private Integer getIdUserAuthenticado(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
@@ -76,14 +52,21 @@ public class HomeController {
 
     @GetMapping
     public String home(Model model, Authentication authentication) {
+
         Integer idUserAuthenticado = getIdUserAuthenticado(authentication);
+
         if (idUserAuthenticado != null) {
+
             UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+            
             if(userPrincipal.isCustomer()){
                 model.addAttribute("mycars", customerService.findAllMyCarDTOs(idUserAuthenticado));
             }
+
         }
+
         return "home";
+
     }
 
     @GetMapping("/search-mycar")
@@ -212,40 +195,5 @@ public class HomeController {
         return "redirect:/home/profile";
 
     }
-
-    /* @PostMapping("/update-profile")
-    public String updateProfile(@ModelAttribute("typeUser") User user, Authentication authentication) {
-
-        Integer idUserAuthenticado = getIdUserAuthenticado(authentication);
-
-        if (idUserAuthenticado != null) {
-
-            user = userService.findUserById(idUserAuthenticado);
-
-            if (user instanceof Customer) {
-                //customerService.updateCustomer((Customer) user);
-                Customer customer = (Customer) user;
-                CustomerDTO customerDTO = CustomerDTO.builder()
-                    .id(customer.getId())
-                    .username(customer.getUsername())
-                    .password(customer.getPassword())
-                    .firstName(customer.getFirstName())
-                    .lastName(customer.getLastName())
-                    .birthdate(customer.getBirthdate())
-                    .phone(customer.getPhone())
-                    .address(customer.getAddress())
-                    .build();
-                customerService.saveCustomerDto(customerDTO);
-            } else if (user instanceof Mechanic) {
-                mechanicService.updateMechanic((Mechanic) user);
-            } else {
-                userService.updateUser(user);
-            }
-
-        }
-
-        return "redirect:/home/profile";
-
-    } */
 
 }
